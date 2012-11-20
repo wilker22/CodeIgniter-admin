@@ -1,0 +1,42 @@
+.ggt_listagem thead tr {
+    height: 35px;
+}
+.ggt_listagem th {
+	text-align: left;
+	border-bottom: 1px solid red;
+}
+.ggt_listagem th a {
+    font-size: 14px;
+	color: #747474;
+    font-weight: bold;
+}
+.ggt_listagem td {
+    border-bottom: 1px solid #F0F0F0;
+    padding: 5px;
+}
+.ggt_listagem tbody tr:hover {
+    background: none repeat scroll 0 0 #E9F3EF;
+    cursor: pointer;
+}
+.ggt_linha_selecionada {
+	background: none repeat scroll 0 0 #E9F3EF;
+}
+.ggt_paginacao {
+	float: right;
+}
+.ggt_paginacao .active {
+	background-color: #F00;
+}
+.ui-icon {
+	display: block;
+	float: left;
+}
+.ggt_listagem .ordem {
+	width:35px
+}
+.ggt_listagem .descricao {
+	width:370px;
+}
+.ggt_filtros tfoot td {
+	padding-top: 10px;
+}
