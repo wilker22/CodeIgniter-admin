@@ -18,8 +18,8 @@
     background: none repeat scroll 0 0 #E9F3EF;
     cursor: pointer;
 }
-.ggt_linha_selecionada {
-	background: none repeat scroll 0 0 #E9F3EF;
+tbody .ggt_linha_selecionada td {
+	background: none repeat scroll 0 0 #E9F3EF !important;
 }
 .ggt_paginacao {
 	float: right;
