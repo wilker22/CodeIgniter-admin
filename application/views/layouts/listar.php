@@ -41,15 +41,12 @@
 <?php if (isset($acao_exportar)):?>
 var ACAO_EXPORTAR = '<?php echo $acao_exportar;?>';
 <?php endif; ?>
-
 <?php if (isset($acao_adicionar)):?>
 var ACAO_ADICIONAR = '<?php echo $acao_adicionar;?>';
 <?php endif; ?>
-
 <?php if (isset($acao_editar)):?>
 var ACAO_EDITAR = '<?php echo $acao_editar;?>';
 <?php endif; ?>
-
 <?php if (isset($acao_remover)): ?>
 var ACAO_REMOVER = '<?php echo $acao_remover;?>';
 <?php endif; ?>

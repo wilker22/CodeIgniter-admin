@@ -157,10 +157,10 @@ abstract class MY_Controller_CRUD extends MY_Controller
 		$data['filtro'] = $filtros->get_formulario_html();
 	
 		$data['botao_direito'] = $this->_init_botao_direito();
-		$data['acao_exportar'] 	= site_url($this->_class.'/exportar/');
-		$data['acao_adicionar'] = site_url($this->_class.'/adicionar/');
-		$data['acao_editar'] 	= site_url($this->_class.'/editar/');
-		$data['acao_remover'] 	= site_url($this->_class.'/remover/');
+		$data['acao_exportar'] 	= site_url($this->_class.'/exportar/').'/';
+		$data['acao_adicionar'] = site_url($this->_class.'/adicionar/').'/';
+		$data['acao_editar'] 	= site_url($this->_class.'/editar/').'/';
+		$data['acao_remover'] 	= site_url($this->_class.'/remover/').'/';
 	
 		return $data;
 	}
