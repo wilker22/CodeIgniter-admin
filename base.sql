@@ -17,21 +17,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `banners`
---
-
-CREATE TABLE `banners` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `imagem` varchar(100) NOT NULL,
-  `descricao` varchar(100) NOT NULL,
-  `ordem` int(11) NOT NULL,
-  `ativo` set('S','N') NOT NULL DEFAULT 'N',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
 -- Estrutura da tabela `sessoes`
 --
 

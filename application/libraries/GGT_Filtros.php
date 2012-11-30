@@ -35,11 +35,7 @@ class GGT_Filtros
 			$qt_hidden = 0;
 			for ($i = 0; $i < $this->qtd_itens; $i++)
 			{
-				if ($this->itens[$i]['tipo'] != 'select')
-					$valor = $this->itens[$i]['valor'];
-				else
-					$valor = '';
-					
+				$valor = isset($this->itens[$i]['valor']) ? $this->itens[$i]['valor'] : '';
 				if ($this->itens[$i]['tipo'] != 'hidden')
 				{
 					$formulario .= PHP_EOL.'<td width="'.intval(100/$this->colunas).'%"'.(!empty($this->itens[$i]["colspan"]) ? ' colspan="'.$this->itens[$i]["colspan"].'"' : '').'>'.PHP_EOL;
@@ -102,7 +98,7 @@ class GGT_Filtros
 				{
 					if ($item['tipo'] == 'select')
 					{
-						foreach ($item['valor'] as $opcoes)
+						foreach ($item['itens'] as $opcoes)
 						{
 							if (($opcoes->id == $valor) && (!empty($opcoes->where)))
 							{
@@ -197,7 +193,7 @@ class GGT_Filtros
 		{
 			$campo .= '<select name="ggt_f['.$item['nome'].']" id="ggt_f_'.$item['nome'].'" '.$item['extra'].' '.(!empty($item['disabled']) ? 'disabled="disabled"' : '').'>'.PHP_EOL;
 			$campo .= '<option value="">Selecione...</option>'.PHP_EOL;
-			foreach ($item['valor'] as $opcao)
+			foreach ($item['itens'] as $opcao)
 			{
 				$campo .= '<option value="'.$opcao->id.'"'.(($opcao->id == $selecionado) ? ' selected' : '').' title="'.$opcao->nome.'">';
 				$campo .= $opcao->nome;

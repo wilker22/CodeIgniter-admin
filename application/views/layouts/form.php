@@ -50,7 +50,9 @@
 			}?>
 		</div>
 		<?php endforeach;?>
-		<?php echo isset($botoes) ? $botoes : ''; ?>
-		<input type="submit" value="Salvar" class="submit"/>
+		<div class="clear botoes">
+			<?php echo isset($botoes) ? $botoes : ''; ?>
+			<input type="submit" value="Salvar" class="submit"/>
+		</div>
 	</form>
 </fieldset>

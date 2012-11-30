@@ -27,7 +27,6 @@
 	</header>
 	<nav>
 		<ul>
-			<?php echo link_menu('Banners');?>
 			<?php echo link_menu('Usuários', 'usuarios');?>
 		</ul>
 	</nav>

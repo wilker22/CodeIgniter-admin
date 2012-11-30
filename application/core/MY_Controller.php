@@ -59,7 +59,7 @@ class MY_Controller extends CI_Controller
 	public function msg_validacao($salvo = NULL)
 	{
 		$ret = array();
-		$ret['msg'] = $this->form_validation->error_string('<p><span class="ui-icon ui-icon-circle-minus">&nbsp;</span><span>', '</span></p>');
+		$ret['msg'] = $this->form_validation->error_string('<li>', '</li>');
 		$ret['class'] = "error";
 		if (empty($ret['msg']))
 		{
@@ -73,6 +73,10 @@ class MY_Controller extends CI_Controller
 				$ret['class'] = '';
 				$ret['msg'] =  '';
 			}
+		}
+		else
+		{
+			$ret['msg'] =  '<h4>Preencha os campos abaixo corretamente:</h4><ul>'.$ret['msg'].'</ul>';
 		}
 		return $ret;
 	}

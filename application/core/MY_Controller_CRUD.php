@@ -6,6 +6,7 @@ abstract class MY_Controller_CRUD extends MY_Controller
 	protected $_sort_order;
 	protected $_titulo;
 	protected $_id;
+	protected $_cabecalho = array();
 	protected $_validacao = array();
 	
 	public function __construct()
@@ -13,7 +14,6 @@ abstract class MY_Controller_CRUD extends MY_Controller
 		parent::__construct();
 	}
 	abstract protected function _init_filtros($valores = array(), $url = '');
-	abstract protected function _init_listagem($itens = array(), $url = '', $exportar = FALSE);
 	protected function _get_parametros_extra() { return array(); }
 	protected function _salva_adicionar() 
 	{
@@ -33,7 +33,7 @@ abstract class MY_Controller_CRUD extends MY_Controller
 	}
 	public function index()
 	{
-		$this->listar();
+		redirect($this->_class.'/listar/');
 	}
 	public function adicionar()
 	{
@@ -63,7 +63,9 @@ abstract class MY_Controller_CRUD extends MY_Controller
 	        $data['validacao'] = $this->msg_validacao();
 	        $data['campos'] = $this->_validacao;
 	        $data['titulo'] = $this->_titulo;
-	        $this->ggt_layouts->view('layouts/form', $data);
+	        
+	        $view = 'layouts/form';
+	        $this->ggt_layouts->view($view, $data);
 	    }
 	}
 	public function editar($id = NULL, $ok = FALSE)
@@ -100,7 +102,9 @@ abstract class MY_Controller_CRUD extends MY_Controller
 	            $data['validacao'] = $this->msg_validacao($salvo);
 	            $data['campos'] = $this->_validacao;
 	        	$data['titulo'] = $this->_titulo;
-	            $this->ggt_layouts->view('layouts/form', $data);
+
+	        	$view = 'layouts/form';
+	            $this->ggt_layouts->view($view, $data);
 	        }
 	    }
 	    else
@@ -133,6 +137,28 @@ abstract class MY_Controller_CRUD extends MY_Controller
     	    ->set_include(JS.'listar.js')
     	    ->set_navigation_bar($this->_titulo, $this->_class.'/'.$this->_method,'1')
     	    ->view('layouts/listar', $data);
+	}
+	protected function _init_listagem($itens = array(), $url = '', $exportar = FALSE)
+	{
+		$config = array('itens' => $itens);
+		if ( ! $exportar)
+		{
+			$config['cabecalhos'] = isset($this->_cabecalho['listar']) ? $this->_cabecalho['listar'] : $this->_cabecalho;
+			$config['selecionavel'] = array('chave' => $this->_id, 'display' => 'none');
+			$config['url'] = $url;
+			$config['ordenar_por'] = pega_chave_array($config['cabecalhos'], ($this->_sort_by-1));
+			$config['ordenar_sentido'] = $this->_sort_order;
+			$config['botoes'] = array(
+					'<a href="javascript:bt_direito.editar([id])" title="Alterar Item ID: [id]"><img width="20" class="imgButton" alt="Editar" src="'.base_url().'img/edit.png"></a>',
+					'<a href="javascript:bt_direito.deletar([id])" title="Remover Item ID: [id]"><img width="20" class="imgButton" alt="Editar" src="'.base_url().'img/delete.png"></a>'
+			);
+			return $this->ggt_listagem->initialize($config)->get_html();
+		}
+		else
+		{
+			$config['cabecalhos'] = isset($this->_cabecalho['exportar']) ? $this->_cabecalho['exportar'] : $this->_cabecalho;
+			return $this->ggt_listagem->initialize($config)->get_xls();
+		}
 	}
 	public function _init_listar($sort_by, $sort_order)
 	{

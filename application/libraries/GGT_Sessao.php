@@ -33,7 +33,7 @@ class GGT_Sessao {
 	}
 	private function _cria_tabela() 
 	{
-		$sql = 'CREATE TABLE `'.$this->tabela.'` (
+		$sql = 'CREATE TABLE `sessoes` (
 				  `id` char(32) NOT NULL,
 				  `dth_inicio` datetime DEFAULT NULL,
 				  `dth_termino` datetime DEFAULT NULL,

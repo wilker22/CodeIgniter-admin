@@ -11,12 +11,21 @@ class Usuarios extends MY_Controller_CRUD
 		$this->_id     = 'id';
 		$this->_titulo = 'Usuários';
 		
-		$this->_validacao = array(
+		$this->_cabecalho = array(
+				'id' 	=> 'ID',
+				'nome'	=> 'Nome',
+				'login'	=> 'Login',
+				'ativo'	=> 'Ativo',
+		);
+		
+		$this->_validacao['adicionar'] = array(
 			'nome'  => array('field' => 'nome',	'label' => 'Nome', 	'rules' => 'trim|required', 'tipo' => 'text',     'extra_campo' => 'class="inputTxt required" maxlength="60" autocomplete="off"', 'extra_div' => 'class="coluna"'),
-			'login' => array('field' => 'login','label' => 'Login',	'rules' => 'trim|required', 'tipo' => 'text',     'extra_campo' => 'class="inputTxt required" maxlength="20" autocomplete="off"', 'extra_div' => 'class="coluna3"'),
+			'login' => array('field' => 'login','label' => 'Login',	'rules' => 'trim|required|is_unique[usuarios.login]', 'tipo' => 'text',     'extra_campo' => 'class="inputTxt required" maxlength="20" autocomplete="off"', 'extra_div' => 'class="coluna3"'),
 			'senha' => array('field' => 'senha','label' => 'Senha',	'rules' => 'trim|required', 'tipo' => 'password', 'extra_campo' => 'class="inputTxt required" maxlength="20" autocomplete="off"', 'extra_div' => 'class="coluna3"'),
 			'ativo' => array('field' => 'ativo','label' => 'Ativo',	'rules' => 'trim', 'tipo' => 'radio', 'itens' => array('S' => 'Sim', 'N' => 'Não'), 'extra_campo' => 'class="coluna2"', 'extra_div' => 'class="coluna3"'),
 		);
+		$this->_validacao['editar'] = $this->_validacao['adicionar'];
+		$this->_validacao['editar']['login'] = array('field' => 'login','label' => 'Login',	'rules' => 'trim|required', 'tipo' => 'text',     'extra_campo' => 'class="inputTxt required" maxlength="20" autocomplete="off"', 'extra_div' => 'class="coluna3"');
 	}
 	protected function _init_filtros($valores = array(), $url = '')
 	{
@@ -35,35 +44,6 @@ class Usuarios extends MY_Controller_CRUD
 		
 		$filtros = $this->ggt_filtros->initialize($itens, $valores, $url, 4, $botoes);
 		return $filtros;
-	}
-	protected function _init_listagem($itens = array(), $url = '', $exportar = FALSE) 
-	{
-		$config = array(
-			'cabecalhos' => array(
-				'id' 	=> 'ID',
-				'nome'	=> 'Nome',
-				'login'	=> 'Login',
-				'ativo'	=> 'Ativo',
-			),
-			'itens' => $itens
-		);
-		if ( ! $exportar)
-		{
-			$config['selecionavel'] = array('chave' => 'id', 'display' => 'none');
-			$config['url'] = $url;
-			$config['sort_by'] = pega_chave_array($config['cabecalhos'], ($this->_sort_by-1));
-			$config['sort_order'] = $this->_sort_order;
-			$config['botoes'] = array(
-					'<a href="javascript:bt_direito.editar([id])" title="Alterar Item ID: [id]"><img width="20" class="imgButton" alt="Editar" src="'.base_url().'img/edit.png"></a>',
-					'<a href="javascript:bt_direito.deletar([id])" title="Remover Item ID: [id]"><img width="20" class="imgButton" alt="Editar" src="'.base_url().'img/delete.png"></a>'
-			);
-			return $this->ggt_listagem->initialize($config)->get_html();
-		}
-		else
-		{
-			$config['cabecalhos']['senha']	= 'Senha';
-			return $this->ggt_listagem->initialize($config)->get_xls();
-		}
 	}
 	protected function _get_dados()
 	{

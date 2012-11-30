@@ -5,7 +5,7 @@ class Usuarios_Model extends MY_Model
 	{
 		parent::__construct();
 		$this->tabela = 'usuarios';
-		$this->colunas = 'id, nome, login, ativo, senha';
+		$this->colunas = 'id, nome, login, ativo';
 		$this->id = 'id';
 	}
 	public function get_login($login, $senha, $cripto = true)
@@ -32,9 +32,7 @@ class Usuarios_Model extends MY_Model
 	private function get_permicoes($user)
 	{
 		$ret = array(
-				'banners' 		=> array ('listar' => TRUE, 'adicionar' => TRUE, 'editar' => TRUE, 'remover' => TRUE, 'exportar' => TRUE),
-				'usuarios' 	    => array ('listar' => TRUE, 'adicionar' => TRUE, 'editar' => TRUE, 'remover' => TRUE, 'exportar' => TRUE),
-				'imagens' 		=> array ('recortar' => TRUE),
+			'usuarios' => array ('listar' => TRUE, 'adicionar' => TRUE, 'editar' => TRUE, 'remover' => TRUE, 'exportar' => TRUE),
 		);
 		return $ret;
 	}

@@ -17,7 +17,7 @@ class GGT_Layouts {
 	// titulo da pagina, NULL by default
 	private $title_for_layout = '';
 	// keywords da pagina, NULL by default
-	private $keywords = array(NM_EMPRESA);
+	private $keywords = array(NM_SISTEMA);
 	// description da pagina, NULL by default
 	private $description = '';
 	// separador do titulo da pagina, | by default
@@ -29,8 +29,8 @@ class GGT_Layouts {
 	  
 	public function __construct() 
 	{
-		$this->title_for_layout = NM_EMPRESA;
-		$this->description = 'Site institucional da ' . NM_EMPRESA; 
+		$this->title_for_layout = NM_SISTEMA;
+		$this->description = 'Sistema ' . NM_SISTEMA; 
 		$this->CI =& get_instance();
 		$this->set_includes_defaults();
 		$this->set_title(false);

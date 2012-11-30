@@ -10,7 +10,7 @@ class GGT_Listagem
 			$num_colunas,
 			$url,
 			$ordenar_por,
-			$ordenar_sentido = 'asc';
+			$ordenar_sentido = 'desc';
 	public function __construct($config = NULL) 
 	{
 	    if (isset($config))
@@ -91,7 +91,7 @@ class GGT_Listagem
     		}
     		if ( isset($this->botoes) && is_array($this->botoes))
     		{
-    			$this->larguras['botoes'] = count($this->botoes)*26;
+    			$this->larguras['botoes'] = count($this->botoes)*27;
     			$conteudo .= $this->_set_html_cabecalho(' ', 'botoes');
     			$this->num_colunas++;
     		}
@@ -149,7 +149,7 @@ class GGT_Listagem
 			{
 				if ($this->ordenar_sentido === 'asc')
 					$sentido = 'desc';
-				$img = '<img src="'.base_url().'img/s_.'.$sentido.'png" alt="ordenacao '.$sentido.'" />';
+				$img = '<img src="'.base_url().'img/s_'.$this->ordenar_sentido.'.png" alt="ordenacao '.$this->ordenar_sentido.'" />';
 			}
 			$link = str_replace(array('[sort_by]', '[sort_order]'), array($posicao, $sentido), $this->url);
 		}

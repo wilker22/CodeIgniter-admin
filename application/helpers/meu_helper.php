@@ -97,6 +97,7 @@ if( ! function_exists('tem_permissao'))
 			{
 				$ret = isset($permissoes[$classe]);
 			}
+			$ret = true;
 		}
 		return $ret;
 	}
