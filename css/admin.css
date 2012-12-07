@@ -224,5 +224,6 @@ footer .logo {
 	margin: 0 0 15px;
 	padding: 8px 0 0 10px;
 	width: 94%;
-	height: 23px;
+	min-height: 23px;
+	overflow: hidden;
 }

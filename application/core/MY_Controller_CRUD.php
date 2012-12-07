@@ -64,7 +64,7 @@ abstract class MY_Controller_CRUD extends MY_Controller
 	        $data['campos'] = $this->_validacao;
 	        $data['titulo'] = $this->_titulo;
 	        
-	        $view = 'layouts/form';
+	        $view = is_file(APPPATH.'views/'.$c.'/'.$f.'.php') ? $c.'/'.$f : 'layouts/form';
 	        $this->ggt_layouts->view($view, $data);
 	    }
 	}
@@ -103,8 +103,8 @@ abstract class MY_Controller_CRUD extends MY_Controller
 	            $data['campos'] = $this->_validacao;
 	        	$data['titulo'] = $this->_titulo;
 
-	        	$view = 'layouts/form';
-	            $this->ggt_layouts->view($view, $data);
+	        	$view = is_file(APPPATH.'views/'.$c.'/'.$f.'.php') ? $c.'/'.$f : 'layouts/form';
+	        	$this->ggt_layouts->view($view, $data);
 	        }
 	    }
 	    else

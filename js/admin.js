@@ -33,16 +33,6 @@ var util = {
             }
         }).resizable( "option", "animate", true );
 	},
-	alert: function(mensagem, tipo) {
-		if(typeof(tipo) === "undefined")
-			tipo = 'alert';
-		$.msgbox(unescape(mensagem), {
-			  type   : tipo,
-			  modal  : true,
-			  buttons: [{type: 'cancel', value:'sair'}]
-			}
-		);
-	},
 	reload: function () { 
 		var x = window.location;
 		window.location = x;
@@ -75,9 +65,9 @@ $(function() {
 		$(this).datepicker({
 			changeMonth: true,
 			changeYear: true
-		}).mask("99/99/9999");
+		}).mask("39/19/9999");
 	});
-	$('.ggt_hora').mask("99:99");
+	$('.ggt_hora').mask("29:69");
 	$('.ggt_phone')
 		.mask("(99) 9999-9999?9")
 		.live('focusout', function (event) {

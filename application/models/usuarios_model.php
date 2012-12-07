@@ -32,7 +32,7 @@ class Usuarios_Model extends MY_Model
 	private function get_permicoes($user)
 	{
 		$ret = array(
-			'usuarios' => array ('listar' => TRUE, 'adicionar' => TRUE, 'editar' => TRUE, 'remover' => TRUE, 'exportar' => TRUE),
+			'usuarios' => array ('listar' => 'Usuários', 'adicionar' => 'Usuários', 'editar' => 'Usuários', 'remover' => 'Usuários', 'exportar' => 'Usuários'),
 		);
 		return $ret;
 	}

@@ -32,12 +32,9 @@ class MY_Controller extends CI_Controller
 		$this->ggt_layouts
 			->set_include(CSS.'admin.css')
 			->set_include(VENDOR.'jquery-ui-1.9.1.custom/jquery-ui-1.9.1.custom.min.css')
-			->set_include(VENDOR.'jquery-msgbox/jquery.msgbox.css')
 			->set_include(VENDOR.'contextMenu/jquery.contextMenu.css')
 			->set_include(VENDOR.'clEditor/jquery.clEditor.css')
 			->set_include(JS.'admin.js')
-			->set_include(VENDOR.'jquery-msgbox/jquery.msgbox.min.js')
-			->set_include(VENDOR.'jquery-maskmoney-1.3/jquery.maskMoney.1.3.js')
 			->set_include(VENDOR.'jquery-maskedinput-1.3/jquery.maskedinput-1.3.min.js')
 			->set_include(VENDOR.'jquery-ui-1.9.1.custom/jquery.ui.datepicker-pt-BR.js')
 			->set_include(VENDOR.'jquery-ui-1.9.1.custom/jquery-ui-1.9.1.custom.min.js')
@@ -46,15 +43,7 @@ class MY_Controller extends CI_Controller
 	}
 	private function _carrega_itens_site()
 	{
-		$this->ggt_layouts
-			->set_include(VENDOR.'jquery-fancyBox-2.1.3/jquery.fancybox.css')
-			->set_include(VENDOR.'jquery-fancyBox-2.1.3/jquery.fancybox.pack.js')
-			->set_include(VENDOR.'jquery-fancyBox-2.1.3/helpers/jquery.fancybox-thumbs.css')
-			->set_include(VENDOR.'jquery-fancyBox-2.1.3/helpers/jquery.fancybox-thumbs.js')
-			->set_include(CSS.'site.css')
-			->set_include(JS.'site.js')
-			
-			->set_include('http://platform.tumblr.com/v1/share.js', false);
+		return true;
 	}
 	public function msg_validacao($salvo = NULL)
 	{

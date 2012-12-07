@@ -23,20 +23,18 @@
 <div class="container">
 	<header>
 		<div id="saudacao">Bem vindo(a), <i><?php echo user_logado(); ?></i>. <a href="<?php echo site_url('admin/logout');?>">fazer logout</a></div>
-		<h1>Gerenciador de Conteúdo</h1>
+		<h1 class="logo"><?php echo NM_SISTEMA_HTML; ?></h1>
 	</header>
 	<nav>
-		<ul>
-			<?php echo link_menu('Usuários', 'usuarios');?>
-		</ul>
+		<?php echo menu_monta();?>
 	</nav>
 	<section>
 		<?php echo $ggt_content; ?>
 	</section>
 	
 	<footer>
-		<div class="logo"><img height="80" title="<?php echo NM_SISTEMA; ?>" alt="<?php echo NM_SISTEMA; ?>" src="<?php echo LOGOMARCA;?>" /></div>
-		<div><?php echo NM_SISTEMA; ?> v.: <?php echo N_VERSAO; ?></div>
+		<div class="logo"><img height="45" title="<?php echo NM_SISTEMA; ?>" alt="<?php echo NM_SISTEMA; ?>" src="<?php echo LOGOMARCA;?>" /></div>
+		<div><?php echo NM_EMPRESA . ' - ' . NM_SISTEMA; ?> v.: <?php echo N_VERSAO; ?></div>
 	</footer>
 </div>
 <?php else: ?>

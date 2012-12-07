@@ -1,4 +1,85 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+if(!function_exists('page_to_string'))
+{
+	function page_to_string($link)
+	{
+		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($curl, CURLOPT_URL, $link);
+		$string = curl_exec($curl);
+		curl_close($curl);
+		return $string;
+	}
+}
+if(!function_exists('monta_campos_form'))
+{
+	function monta_campos_form($campos = array(), $dados = NULL)
+	{
+		$html = '';
+		if(count($campos))
+		{
+			$i = 0;
+			$dados = isset($dados) ? $dados : new stdClass();
+			foreach ($campos as $campo)
+			{
+				$i++;
+				$value = set_value($campo["field"], isset($dados->{$campo["field"]}) ? $dados->{$campo["field"]} : '');
+				$dados->{$campo["field"]} = isset($dados->{$campo["field"]}) ? $dados->{$campo["field"]} : '';
+				$campo['extra_div'] = isset($campo['extra_div']) ? $campo['extra_div'] : '';
+				$campo["field"] = isset($campo["field"]) ? $campo["field"] : '';
+				$campo["extra_campo"] = isset($campo["extra_campo"]) ? $campo["extra_campo"] : '';
+				$campo["tipo"] = isset($campo["tipo"]) ? $campo["tipo"] : "text";
+				$campo["selecionado"] = !empty($value) ? $value : (isset($campo["selecionado"]) ? $campo["selecionado"] : '');
+
+				$html .= PHP_EOL.'<div '.$campo['extra_div'].'>';
+				$html .= PHP_EOL.'<label for="ggt_'.$campo['field'].'">'.$campo['label'].'</label>';
+				switch ($campo['tipo'])
+				{
+					case 'checkbox':
+						if (isset($campo['itens']))
+						{
+							$html .= PHP_EOL.'<div class="divInput">';
+							foreach ($campo['itens'] AS $id => $item)
+							{
+								$i++;
+								$html .= PHP_EOL.'<div '.$campo["extra_campo"].'><input type="checkbox" name="'.$campo["field"].'[]" id="ggt_'.$campo["field"].$i.'" value="'.$id.'" title="'.$item.'" '.(($dados->{$campo["field"]} == $id) ? 'checked="checked"' : '').' /> <label for="ggt_'.$campo["field"].$i.'">'.$item.'</label></div>';
+							}
+							$html .= PHP_EOL.'</div>';
+						}
+						break;
+					case 'radio':
+						if (isset($campo['itens']))
+						{
+							$html .= PHP_EOL.'<div class="divInput">';
+							foreach ($campo['itens'] AS $id => $item)
+							{
+								$i++;
+								$html .= PHP_EOL.'<div '.$campo["extra_campo"].'><input type="radio" name="'.$campo["field"].'" id="ggt_'.$campo["field"].$i.'" value="'.$id.'" title="'.$item.'" '.(($dados->{$campo["field"]} == $id) ? 'checked="checked"' : '').' /> <label for="ggt_'.$campo["field"].$i.'">'.$item.'</label></div>';
+							}
+							$html .= PHP_EOL.'</div>';
+						}
+						break;
+					case 'select':
+						$html .= PHP_EOL.'<select name="'.$campo["field"].'" id="ggt_'.$campo["field"].'" title="'.$campo["label"].'" '.$campo["extra_campo"].'>';
+						$html .= PHP_EOL.gera_select_option($campo['itens'], $campo["selecionado"], 'Selecione...');
+						$html .= PHP_EOL.'</select>';
+						break;
+					case 'textarea':
+						$html .= PHP_EOL.'<textarea name="'.$campo["field"].'" id="ggt_'.$campo["field"].'" placeholder="'.$campo["label"].'" '.$campo["extra_campo"].'>'. $value.'</textarea>';
+						break;
+					case 'file':
+						$html .= PHP_EOL.'<input type="file" name="'.$campo["field"].'" id="ggt_'.$campo["field"].'" placeholder="'.$campo["label"].'" '.$campo["extra_campo"].' rel="'.$dados->{$campo["field"]}.'" />';
+						break;
+					default:
+						$html .= PHP_EOL.'<input type="'.$campo["tipo"].'" name="'.$campo["field"].'" id="ggt_'.$campo["field"].'" placeholder="'.$campo["label"].'" '.$campo["extra_campo"].' value="'. $value.'" />';
+						break;
+				}
+				$html .= PHP_EOL.'</div>';
+			}
+		}
+		return $html;
+	}
+}
 if(!function_exists('pega_chave_array'))
 {
 	function pega_chave_array($array = array(), $posicao = 0)
@@ -97,7 +178,6 @@ if( ! function_exists('tem_permissao'))
 			{
 				$ret = isset($permissoes[$classe]);
 			}
-			$ret = true;
 		}
 		return $ret;
 	}
@@ -128,13 +208,30 @@ if ( ! function_exists('envia_email'))
 		return $CI->email->send();
 	}
 }
-if ( ! function_exists('link_menu'))
+if ( ! function_exists('menu_link'))
 {
-	function link_menu($campo, $modulo = NULL, $acao = 'listar')
+	function menu_link($campo, $modulo = NULL, $acao = 'listar')
 	{
 		if ( ! isset($modulo))
 			$modulo = strtolower($campo);
 		return '<li><a href="'.site_url($modulo.'/'.$acao).'" class="'. (menu_ativo($modulo) ? 'active' : '') .'">'.$campo.'</a></li>';
+	}
+}
+if ( ! function_exists('menu_monta'))
+{
+	function menu_monta()
+	{
+		$ret = '';
+		if (isset($_SESSION['permissoes']))
+		{
+			$permicoes = $_SESSION['permissoes'];
+			foreach ($permicoes AS $modulo => $nome)
+			{
+				$nome = current($nome);
+				$ret .= menu_link($nome, $modulo);
+			}
+		}
+		return ($ret !== '') ? $ret = '<ul>'.$ret.'</ul>' : '';
 	}
 }
 if ( ! function_exists('unzip'))
@@ -171,5 +268,55 @@ if ( ! function_exists('pega_arquivos'))
 	function pega_imagens($caminho)
 	{
 		return glob($caminho."{*.jpg,*.JPG}", GLOB_BRACE);
+	}
+}
+if(!function_exists('formata_data_mysql'))
+{
+	function formata_data_mysql($data, $set_hoje_default = TRUE)
+	{
+		$data = str_replace('_', '', $data);
+		if ($set_hoje_default)
+		{
+			$ret = date('Y-m-d');
+		}
+		else
+		{
+			$ret = NULL;
+		}
+			
+		if ( strlen($data) == 10)
+		{
+			$data = explode('/', $data);
+			if (count($data) == 3)
+			{
+				$ret = implode('-', array_reverse($data));
+			}
+		}
+
+		return $ret;
+	}
+}
+if(!function_exists('formata_valor_dinheiro_mysql'))
+{
+	function formata_valor_dinheiro_mysql($valor)
+	{
+		$valor_final = ereg_replace("[^0-9]", "", $valor);
+		$valor_final = number_format($valor_final/100,2,'.','');
+		return $valor_final;
+	}
+}
+
+if ( ! function_exists('formata_valor_dinheiro'))
+{
+	function formata_valor_dinheiro($valor, $set_zero_default = TRUE, $moeda = 'R$ ')
+	{
+		$ret = '';
+		$valor = floatval($valor);
+		$tmp = number_format($valor, 2, ',', '.');
+		if ($set_zero_default || $valor > 0)
+		{
+			$ret = $moeda . $tmp;
+		}
+		return $ret;
 	}
 }

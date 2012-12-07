@@ -40,6 +40,7 @@ define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 define('LOGOMARCA', 							'img/logo.jpg');
 define('NM_EMPRESA', 							'Empresa XXX');
 define('NM_SISTEMA', 							'Painel Administrativo');
+define('NM_SISTEMA_HTML', 						'<strong>Painel Administrativo</strong>');
 define('EXTENCOES_PERMITIDAS', 					'rar zip exe pdf xlt xls xlsx doc docx txt htm html 3gp mp4 avi flv mp3 swf bmp gif tif jpg cdr psd');
 define('LAYOUT_DEFAULT', 						'default');
 define('TEMPO_EXPIRAR', 						3600);

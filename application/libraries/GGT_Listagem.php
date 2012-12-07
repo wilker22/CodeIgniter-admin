@@ -74,6 +74,8 @@ class GGT_Listagem
 		{
 		    $this->num_colunas = sizeof($this->cabecalhos);
     	    $conteudo = '<thead><tr>'.PHP_EOL;
+    	    $this->selecionavel['chave'] = isset($this->selecionavel['chave']) ? $this->selecionavel['chave'] : '';
+    	    $this->selecionavel['display'] = isset($this->selecionavel['display']) ? $this->selecionavel['display'] : '';
     	    if (isset($this->cabecalhos[$this->selecionavel['chave']]))
     	    {
     	        $input = '<input type="checkbox" style="display:'.$this->selecionavel['display'].'" name="ggt_seleciona_todos" id="ggt_seleciona_todos" /> ';
@@ -112,7 +114,7 @@ class GGT_Listagem
 				$id = isset($item->{$this->selecionavel['chave']}) ? $item->{$this->selecionavel['chave']} : '';
 				if ( ! empty($id))
     	    	{
-    	    	    $input = '<input type="checkbox" style="display:'.$this->selecionavel['display'].'" name="ggt_selecionado['.$id.']" value="'.$id.'" /> ';
+    	    	    $input = '<input type="checkbox" style="display:'.$this->selecionavel['display'].'" name="ggt_selecionado['.$id.']" id="ggt_selecionado_'.$id.'" value="'.$id.'" /> ';
 				}
 				else
 				{
